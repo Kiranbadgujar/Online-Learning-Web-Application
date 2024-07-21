@@ -5,6 +5,7 @@ import Components from "./components/Components";
 import Coursepreview from "./pages/Coursepreview";
 import Dashboard from "./pages/Dashboard";
 import Course from "./pages/Course";
+import Profile from "./pages/Profile";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
 import Login from "./pages/auth/Login"
@@ -48,6 +49,7 @@ function AppContent() {
         <Route path="/register" element={isAuth ? <Components /> :<Register />} />
         <Route path="/verify" element={isAuth ? <Components /> :<Verify />} />
         <Route path="/forgetPassword" element={isAuth ? <Components /> :<ForgetPassword />} />
+        <Route path="/profile" element={<Profile />} />
       </Routes>
       {showHeaderFooter && <Footer />}
     </>

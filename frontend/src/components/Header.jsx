@@ -8,7 +8,7 @@ import { IoMdArrowDropdown } from "react-icons/io";
 const Header = ({ isAuth }) => {
   const [toggle, setToggle] = useState(false);
   const [icontoggle, setIconToggle] = useState(false);
-  const [menuclass, setMenuClass] = useState("");
+  // const [menuclass, setMenuClass] = useState("");
 
   const toggleMenu = () => {
     setToggle(!toggle);
@@ -18,13 +18,13 @@ const Header = ({ isAuth }) => {
     setIconToggle(!icontoggle);
   };
 
-  useEffect(() => {
-    setMenuClass(
-      toggle
-        ? "transition-opacity ease-in-out duration-300 transform translate-y-6 opacity-100"
-        : "transition-opacity ease-in-out duration-300 transform translate-x-0 opacity-0"
-    );
-  }, [toggle]);
+  // useEffect(() => {
+  //   setMenuClass(
+  //     toggle
+  //       ? "transition-opacity ease-in-out duration-900 transform translate-y-6 opacity-100"
+  //       : "transition-opacity ease-in-out duration-900 transform translate-x-6 opacity-0"
+  //   );
+  // }, [toggle]);
 
   // DROPDOWn
 
@@ -37,11 +37,13 @@ const Header = ({ isAuth }) => {
   return (
     <>
       <div className="flex justify-between item-center bg-black py-3 text-white font-mono">
+      
         <div className="pl-[35px] lg:pl-[100px]">
           <Link to="/">
             <img src={logo} className="w-[47px] h-[47px]" alt="Logo" />
           </Link>
         </div>
+
         <div className="hidden lg:flex ">
           <ul className="flex justify-between items-center gap-48">
             <li className="">
@@ -66,26 +68,26 @@ const Header = ({ isAuth }) => {
                   <div className="bg-white text-black p-2 rounded-full">KB</div>
                   <IoMdArrowDropdown />
                   {isOpen && (
-                    <div className="absolute mt-2 w-56 bg-white rounded-md shadow-2xl top-14 mr-48">
+                    <div className="absolute w-56 bg-white rounded-md shadow-2xl top-14 mr-48">
                       <div className="py-1 px-1">
-                        <a
-                          href="#"
+                        <Link
+                          to="#"
                           className="block px-4 py-2 text-gray-800 hover:bg-[black] hover:text-white"
                         >
                          My Purchase
-                        </a>
-                        <a
-                          href="#"
+                        </Link>
+                        <Link
+                          to="/profile"
                           className="block px-4 py-2 text-gray-800 hover:bg-[black] hover:text-white"
                         >
                          My Profile
-                        </a>
-                        <a
-                          href="#"
+                        </Link>
+                        <Link
+                          to="#"
                           className="block px-4 py-2 text-gray-800 hover:bg-[black] hover:text-white"
                         >
                           Logout
-                        </a>
+                        </Link>
                       </div>
                     </div>
                   )}
@@ -101,6 +103,7 @@ const Header = ({ isAuth }) => {
             </li>
           </ul>
         </div>
+        
         {/*  MOBILE MENU */}
         <div className="lg:hidden flex flex-col pr-10">
           {icontoggle ? (
@@ -128,12 +131,11 @@ const Header = ({ isAuth }) => {
           )}
           {toggle && (
             <div
-              id="mob-menu"
-              className={`bg-black text-white  absolute mt-6 right-0 w-full ${menuclass}`}
+              className={"bg-black text-white absolute mt-6 pb-8 right-0 top-12 w-full"}
             >
               <ul className="flex flex-col justify-start items-start gap-2">
-                <li className="text-xl text-white font-semibold hover:text-white w-full py-3 text-center cursor-pointer">
-                  <Link to="/course" className="font-semibold">
+                <li className="text-xl text-white font-semibold w-full py-3 text-center cursor-pointer">
+                  <Link to="/course">
                     Courses
                   </Link>
                 </li>
@@ -150,18 +152,18 @@ const Header = ({ isAuth }) => {
                 <li className="text-xl text-white font-semibold hover:text-white w-full text-center cursor-pointer">
                   {isAuth ? (
                     <>
-                      <li className="text-xl text-white font-semibold hover:text-white w-full py-2 text-center cursor-pointer">
-                        <Link to="/course" className="font-semibold">
+                      <li>
+                        <Link to="/course">
                           My Purchase
                         </Link>
                       </li>
-                      <li className="text-xl text-white font-semibold hover:text-white w-full py-2 text-center cursor-pointer">
-                        <Link to="/course" className="font-semibold">
+                      <li>
+                        <Link to="/profile">
                           My Profile
                         </Link>
                       </li>
-                      <li className="text-xl text-white font-semibold hover:text-white w-full py-2 text-center cursor-pointer">
-                        <Link to="/course" className="font-semibold">
+                      <li>
+                        <Link to="/course">
                           Logout
                         </Link>
                       </li>

@@ -9,6 +9,7 @@ const Login = ({ setIsAuth }) => {
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [btnLoading, setBtnLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false); 
   const navigate = useNavigate();
   const server = "http://localhost:5000";
 
@@ -44,6 +45,10 @@ const Login = ({ setIsAuth }) => {
     }
   };
 
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const isEmailValid = validateEmail();
@@ -61,31 +66,7 @@ const Login = ({ setIsAuth }) => {
           navigate("/");
         })
         .catch((error) => {
-          if (error.response) {
-            const { status, data } = error.response;
-            if (status === 400) {
-              if (data.errors && data.errors.length > 0) {
-                data.errors.forEach((err) => {
-                  if (err.param === "email") {
-                    setEmailError(err.msg);
-                  } else if (err.param === "password") {
-                    setPasswordError(err.msg);
-                  }
-                  // Handle other errors if needed
-                });
-              } else {
-                toast.error(data.message || "Login failed");
-              }
-            } else if (status === 500) {
-              toast.error("Internal server error. Please try again later.");
-            } else {
-              toast.error("An error occurred. Please try again.");
-            }
-          } else {
-            toast.error(
-              "Network error. Please check your internet connection."
-            );
-          }
+          toast.error(error.response.data.message);
           setBtnLoading(false);
         });
     } else {
@@ -119,15 +100,24 @@ const Login = ({ setIsAuth }) => {
             <label className="block mb-2 font-extrabold" htmlFor="password">
               Password
             </label>
-            <input
-              className={`inline-block w-full p-4 leading-6 text-lg font-extrabold placeholder-black bg-white shadow border-2 border-black rounded ${
-                passwordError ? "border-red-500" : ""
-              }`}
-              type="password"
-              placeholder="Enter your password"
-              value={password}
-              onChange={handleChangePassword}
-            />
+            <div className="relative">
+              <input
+                className={`inline-block w-full p-4 leading-6 text-lg font-extrabold placeholder-black bg-white shadow border-2 border-black rounded ${
+                  passwordError ? "border-red-500" : ""
+                }`}
+                type={showPassword ? "text" : "password"}
+                placeholder="Enter your password"
+                value={password}
+                onChange={handleChangePassword}
+              />
+              <button
+                type="button"
+                className="absolute inset-y-0 right-0 px-4 py-3 text-lg font-extrabold focus:outline-none"
+                onClick={togglePasswordVisibility}
+              >
+                {showPassword ? "Hide" : "Show"}
+              </button>
+            </div>
             {passwordError && (
               <p className="text-red-500 mt-2">{passwordError}</p>
             )}

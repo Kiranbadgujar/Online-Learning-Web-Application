@@ -27,48 +27,20 @@ const Verify = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const isNameOtp = validateOtp();
+    // console.log(isNameOtp);
     if (isNameOtp) {
       setBtnLoading(true);
+      const activationToken = localStorage.getItem("activationToken");
       axios
-        .post(`${server}/api/user/verify`, { otp })
+        .post(`${server}/api/user/verify`, { otp , activationToken })
         .then((response) => {
           toast.success(response.data.message);
-          setName("");
-          setEmail("");
-          setPassword("");
+          navigate("/login");
+          localStorage.clear();
           setBtnLoading(false);
-          navigate("/verify");
         })
         .catch((error) => {
-          if (error.response) {
-            // Server responded with a status code outside of 2xx range
-            const { status, data } = error.response;
-            if (status === 400) {
-              // Handle specific validation errors from server
-              if (data.errors && data.errors.length > 0) {
-                data.errors.forEach((err) => {
-                  if (err.param === "name") {
-                    setNameError(err.msg);
-                  } else if (err.param === "email") {
-                    setEmailError(err.msg);
-                  } else if (err.param === "password") {
-                    setPasswordError(err.msg);
-                  }
-                });
-              } else {
-                toast.error(data.message || "Registration failed");
-              }
-            } else if (status === 500) {
-              toast.error("Internal server error. Please try again later.");
-            } else {
-              toast.error("An error occurred. Please try again.");
-            }
-          } else {
-            // Request was made but no response received
-            toast.error(
-              "Network error. Please check your internet connection."
-            );
-          }
+          toast.error(error.response.data.message);
           setBtnLoading(false);
         });
    
@@ -84,7 +56,7 @@ const Verify = () => {
         </div>
         <form onSubmit={handleSubmit}>
           <div className="mb-6">
-            <label className="block mb-2 font-extrabold" htmlFor="">
+            <label className="block mb-2 font-extrabold" htmlFor="otp">
               OTP
             </label>
             <input

@@ -11,6 +11,7 @@ const Register = () => {
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [btnLoading, setBtnLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
   const server = "http://localhost:5000";
 
@@ -76,6 +77,10 @@ const Register = () => {
     }
   };
 
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const isNameValid = validateName();
@@ -87,27 +92,18 @@ const Register = () => {
       axios
         .post(`${server}/api/user/register`, { name, email, password })
         .then((response) => {
-          console.log(response);
+          // console.log(response);
           toast.success(response.data.message);
-          localStorage.setItem("activationToken", response.data.activationToken);
-          setName("");
-          setEmail("");
-          setPassword("");
+          localStorage.setItem(
+            "activationToken",
+            response.data.activationToken
+          );
           setBtnLoading(false);
           navigate("/verify");
         })
         .catch((error) => {
-          if (error) {
-            // Server responded with a status code outside of 2xx range
-            const { data } = error.response;
-            toast.error(data.message || "Registration failed");
-          } else {
-            // Request was made but no response received
-            toast.error(
-              "Network error. Please check your internet connection."
-            );
-          }
           setBtnLoading(false);
+          toast.error(error.response.data.message);
         });
     } else {
       // Handle validation errors
@@ -152,7 +148,7 @@ const Register = () => {
             />
             {emailError && <p className="text-red-500 mt-2">{emailError}</p>}
           </div>
-          <div className="mb-4">
+          <div className="mb-4 relative">
             <label className="block font-extrabold" htmlFor="password">
               Password
             </label>
@@ -160,11 +156,18 @@ const Register = () => {
               className={`inline-block w-full p-4 leading-6 text-lg font-extrabold placeholder-black bg-white shadow border-2 border-black rounded ${
                 passwordError ? "border-red-500" : ""
               }`}
-              type="password"
-              placeholder="**********"
+              type={showPassword ? "text" : "password"}
+              placeholder="Enter password"
               value={password}
               onChange={handleChangePassword}
             />
+            <button
+              type="button"
+              className="absolute right-0 px-4 py-3 text-lg font-extrabold focus:outline-none"
+              onClick={togglePasswordVisibility}
+            >
+              {showPassword ? "Hide" : "Show"}
+            </button>
             {passwordError && (
               <p className="text-red-500 mt-2">{passwordError}</p>
             )}
