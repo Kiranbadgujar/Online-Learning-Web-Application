@@ -1,5 +1,5 @@
 import React,{useState} from "react";
-import {Link} from "react-router-dom"
+import {Link , useNavigate} from "react-router-dom"
 import toast, { Toaster } from "react-hot-toast";
 import axios from "axios";
 
@@ -7,6 +7,7 @@ const Verify = () => {
   const [otp, setOtp] = useState("");
   const [otpError, setOtpError] = useState("");
   const [btnLoading, setBtnLoading] = useState(false);  
+  const navigate = useNavigate();
   const server = "http://localhost:5000";
 
   const validateOtp = () => {
@@ -27,7 +28,6 @@ const Verify = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const isNameOtp = validateOtp();
-    // console.log(isNameOtp);
     if (isNameOtp) {
       setBtnLoading(true);
       const activationToken = localStorage.getItem("activationToken");
@@ -35,9 +35,10 @@ const Verify = () => {
         .post(`${server}/api/user/verify`, { otp , activationToken })
         .then((response) => {
           toast.success(response.data.message);
-          navigate("/login");
           localStorage.clear();
-          setBtnLoading(false);
+          setTimeout(() => {
+            navigate("/login");
+          }, 5000);
         })
         .catch((error) => {
           toast.error(error.response.data.message);
@@ -60,7 +61,7 @@ const Verify = () => {
               OTP
             </label>
             <input
-              className={`inline-block w-full p-4 leading-6 text-lg font-extrabold placeholder-black bg-white shadow border-2 border-black rounded ${
+              className={`w-full p-4 text-lg font-extrabold placeholder-black shadow border-2 border-black rounded ${
                 otpError ? "border-red-500" : ""
               }`}
               type="text"
@@ -75,7 +76,7 @@ const Verify = () => {
               
             </div>
           </div>
-          <button className="inline-block w-full py-4 px-6 mb-6 text-center text-lg leading-6 text-white font-extrabold bg-black hover:bg-indigo-900 border-3 border-indigo-900 shadow rounded transition duration-200">
+          <button className="w-full py-4 px-6 mb-6 text-center text-lg font-extrabold text-white bg-black hover:bg-[#ffd200] rounded">
           {btnLoading ? "Please Wait..." : "Verify Otp"}
           </button>
           <p className="text-center font-extrabold">

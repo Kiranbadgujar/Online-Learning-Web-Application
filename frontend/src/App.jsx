@@ -12,6 +12,7 @@ import Login from "./pages/auth/Login"
 import Register from "./pages/auth/Register"
 import Verify from "./pages/auth/verify"
 import ForgetPassword from "./pages/auth/ForgetPassword"
+import ResetPassword from "./pages/auth/ResetPassword"
 
 function App() {
   return (
@@ -48,7 +49,8 @@ function AppContent() {
         <Route path="/login" element={isAuth ? <Components /> : <Login  setIsAuth={setIsAuth}/>} />
         <Route path="/register" element={isAuth ? <Components /> :<Register />} />
         <Route path="/verify" element={isAuth ? <Components /> :<Verify />} />
-        <Route path="/forgetPassword" element={isAuth ? <Components /> :<ForgetPassword />} />
+        <Route path="/forgetpassword" element={isAuth ? <Components /> :<ForgetPassword />} />
+        <Route path="/resetpassword/:token" element={isAuth ? <Components /> :<ResetPassword />} />
         <Route path="/profile" element={<Profile />} />
       </Routes>
       {showHeaderFooter && <Footer />}

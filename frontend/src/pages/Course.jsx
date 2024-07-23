@@ -42,19 +42,19 @@ const Course = () => {
               <div className="py-1">
                 <a
                   href="#"
-                  className="block px-4 py-2 text-gray-800 hover:bg-indigo-500 hover:text-white"
+                  className="block px-2 py-2 text-gray-800 hover:bg-indigo-500 hover:text-white"
                 >
-                  Financial&Investing
+                  Financial & Investing
                 </a>
                 <a
                   href="#"
-                  className="block px-4 py-2 text-gray-800 hover:bg-indigo-500 hover:text-white"
+                  className="block px-2 py-2 text-gray-800 hover:bg-indigo-500 hover:text-white"
                 >
                   Option Trading
                 </a>
                 <a
                   href="#"
-                  className="block px-4 py-2 text-gray-800 hover:bg-indigo-500 hover:text-white"
+                  className="block px-2 py-2 text-gray-800 hover:bg-indigo-500 hover:text-white"
                 >
                   Stock Market
                 </a>

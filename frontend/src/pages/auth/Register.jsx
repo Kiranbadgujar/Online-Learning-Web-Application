@@ -92,14 +92,15 @@ const Register = () => {
       axios
         .post(`${server}/api/user/register`, { name, email, password })
         .then((response) => {
-          // console.log(response);
           toast.success(response.data.message);
           localStorage.setItem(
             "activationToken",
             response.data.activationToken
           );
-          setBtnLoading(false);
-          navigate("/verify");
+          setTimeout(() => {
+            navigate("/verify");
+          }, 5000);
+          
         })
         .catch((error) => {
           setBtnLoading(false);
@@ -123,7 +124,7 @@ const Register = () => {
               Name
             </label>
             <input
-              className={`inline-block w-full p-4 leading-6 text-lg font-extrabold placeholder-black bg-white shadow border-2 border-black rounded ${
+              className={`w-full p-4 text-lg font-extrabold placeholder-black border-2 border-black rounded ${
                 nameError ? "border-red-500" : ""
               }`}
               type="text"
@@ -138,7 +139,7 @@ const Register = () => {
               Email
             </label>
             <input
-              className={`inline-block w-full p-4 leading-6 text-lg font-extrabold placeholder-black bg-white shadow border-2 border-black rounded ${
+              className={`w-full p-4 text-lg font-extrabold placeholder-black border-2 border-black rounded ${
                 emailError ? "border-red-500" : ""
               }`}
               type="email"
@@ -153,7 +154,7 @@ const Register = () => {
               Password
             </label>
             <input
-              className={`inline-block w-full p-4 leading-6 text-lg font-extrabold placeholder-black bg-white shadow border-2 border-black rounded ${
+              className={`w-full p-4 text-lg font-extrabold placeholder-black border-2 border-black rounded ${
                 passwordError ? "border-red-500" : ""
               }`}
               type={showPassword ? "text" : "password"}
@@ -175,7 +176,7 @@ const Register = () => {
           <button
             type="submit"
             disabled={btnLoading}
-            className="inline-block w-full py-4 px-6 mb-4 text-center text-lg leading-6 text-white font-extrabold bg-black hover:bg-indigo-900 border-3 border-indigo-900 shadow rounded transition duration-200"
+            className="w-full py-4 px-6 mb-4 text-center text-lg  text-white font-extrabold bg-black hover:bg-[#ffd200] rounded"
           >
             {btnLoading ? "Please Wait..." : "Sign up"}
           </button>

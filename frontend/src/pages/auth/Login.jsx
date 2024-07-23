@@ -86,7 +86,7 @@ const Login = ({ setIsAuth }) => {
               Email
             </label>
             <input
-              className={`inline-block w-full p-4 leading-6 text-lg font-extrabold placeholder-black bg-white shadow border-2 border-black rounded ${
+              className={`w-full p-4 text-lg font-extrabold placeholder-black border-2 border-black rounded ${
                 emailError ? "border-red-500" : ""
               }`}
               type="email"
@@ -102,7 +102,7 @@ const Login = ({ setIsAuth }) => {
             </label>
             <div className="relative">
               <input
-                className={`inline-block w-full p-4 leading-6 text-lg font-extrabold placeholder-black bg-white shadow border-2 border-black rounded ${
+                className={`w-full p-4 text-lg font-extrabold placeholder-black border-2 border-black rounded ${
                   passwordError ? "border-red-500" : ""
                 }`}
                 type={showPassword ? "text" : "password"}
@@ -126,7 +126,7 @@ const Login = ({ setIsAuth }) => {
             <div className="w-full lg:w-auto px-4 mb-4 lg:mb-0"></div>
             <div className="w-full lg:w-auto px-4">
               <Link
-                to="/forgetPassword"
+                to="/forgetpassword"
                 className="inline-block font-extrabold hover:underline"
               >
                 Forgot your password?
@@ -136,7 +136,7 @@ const Login = ({ setIsAuth }) => {
           <button
             disabled={btnLoading}
             type="submit"
-            className="inline-block w-full py-4 px-6 mb-6 text-center text-lg leading-6 text-white font-extrabold bg-black hover:bg-indigo-900 border-3 border-indigo-900 shadow rounded transition duration-200"
+            className="w-full py-4 px-6 mb-6 text-center text-lg text-white font-extrabold bg-black hover:bg-[#ffd200] rounded"
           >
              {btnLoading ? "Please Wait..." : "Sign in"}
           </button>
